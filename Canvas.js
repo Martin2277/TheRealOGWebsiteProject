@@ -9,22 +9,21 @@ $(document).ready(function () {
     var mouseX;
     var mouseY;
 
-    function setMousePosition(e) {
+    function setMousePosition(e) { //erhält die aktuelle Mausposition
         mouseX = e.x;
         mouseY = e.y;
         //alert(mouseX);
         //alert(mouseY);
     }
 
-    function drawPadle() {
-
+    function drawPadle() { //zeichnet den Schläger basierend auf der aktuellen Mausposition
         ctx.beginPath();
         ctx.rect(mouseX - 50, 530, 100, 10);
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
     }
-    function drawBall() {
+    function drawBall() { //zeichnet den SpielBall
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI * 2);
         ctx.fillStyle = "#0095DD";
@@ -32,7 +31,7 @@ $(document).ready(function () {
         ctx.closePath();
     }
 
-    function draw() {
+    function draw() { //cleart das Canvas und zeichnet die elemente an einer neuen Position, einmal pro Frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         x += dx;
         y += dy;
@@ -42,7 +41,7 @@ $(document).ready(function () {
         drawPadle();
     }
 
-    function checkCollisionWalls() {
+    function checkCollisionWalls() { //überprüft auf Kollisionen mit Wänden
         var GameFieldHeight = canvas.height;
         var GameFieldWidth = canvas.width;
         if (x >= GameFieldWidth) {
@@ -58,7 +57,7 @@ $(document).ready(function () {
             alert("You Lose!");
         }
     }
-    function checkCollisionPadle() {
+    function checkCollisionPadle() { //überprüft auf Schlägerkontakt
         if (y >= 525) {
             if (x >= mouseX - 50 && x <= mouseX + 50 && dy > 0) {
                 dy = -2;
