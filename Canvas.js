@@ -34,9 +34,9 @@ $(document).ready(function () {
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBall();
         x += dx;
         y += dy;
+        drawBall();
         checkCollisionWalls();
         checkCollisionPadle();
         drawPadle();
@@ -55,7 +55,7 @@ $(document).ready(function () {
             dy = 2;
         }
         if (y >= GameFieldHeight) {
-            dy = -2;
+            alert("You Lose!");
         }
     }
     function checkCollisionPadle() {
