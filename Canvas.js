@@ -1,11 +1,29 @@
 $(document).ready(function () {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
+    canvas.addEventListener("mousemove", setMousePosition, false);
     var x = canvas.width / 2;
-    var y = canvas.height - 30;
+    var y = canvas.height - 100;
     var dx = 2;
     var dy = -2;
+    var mouseX;
+    var mouseY;
 
+    function setMousePosition(e) {
+        mouseX = e.x;
+        mouseY = e.y;
+        //alert(mouseX);
+        //alert(mouseY);
+    }
+
+    function drawPadle() {
+
+        ctx.beginPath();
+        ctx.rect(mouseX - 50, 530, 100, 10);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI * 2);
@@ -20,6 +38,8 @@ $(document).ready(function () {
         x += dx;
         y += dy;
         checkCollisionWalls();
+        checkCollisionPadle();
+        drawPadle();
     }
 
     function checkCollisionWalls() {
@@ -36,6 +56,13 @@ $(document).ready(function () {
         }
         if (y >= GameFieldHeight) {
             dy = -2;
+        }
+    }
+    function checkCollisionPadle() {
+        if (y >= 525) {
+            if (x >= mouseX - 50 && x <= mouseX + 50 && dy > 0) {
+                dy = -2;
+            }
         }
     }
 
