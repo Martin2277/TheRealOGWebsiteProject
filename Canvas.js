@@ -4,18 +4,51 @@ $(document).ready(function () {
     canvas.addEventListener("mousemove", setMousePosition, false);
     var x = canvas.width / 2;
     var y = canvas.height - 100;
-    var dx = 2;
-    var dy = -2;
+    var dx = 5;
+    var dy = -5;
     var mouseX;
     var mouseY;
+    var blockWidth = ((canvas.width - 20) / 20)
+    var blockHeight = 10;
+    var blocksThere = false;
+    var BlockX = [];
+    var BlockY = [];
+    var counter = 0;
+    var isCalculated = false;
+    var Blocks = 0;
 
     function setMousePosition(e) { //erhält die aktuelle Mausposition
-        mouseX = e.x;
+        mouseX = e.x - 250;
         mouseY = e.y;
         //alert(mouseX);
         //alert(mouseY);
     }
-
+    function drawBlocks() {
+        counter = 0;
+        for (var i = 0; i < 15; i++) {
+            for (var j = 0; j < 29; j++) {
+                ctx.beginPath();
+                ctx.rect(BlockX[counter], BlockY[counter], blockWidth - 1, blockHeight - 1);
+                ctx.fillStyle = "#0095DD";
+                ctx.fill();
+                ctx.closePath();
+                counter++;
+            }
+        }
+    }
+    function calculateBlocksPosition() {
+        counter = 0;
+        for (var i = 0; i < 15; i++) {
+            for (var j = 0; j < 19; j++) {
+                BlockX[counter] = (j * blockWidth + 35);
+                BlockY[counter] = (i * blockHeight + 35);
+                counter++
+            }
+        }
+    }
+    function setBlocks() {
+        Blocks = BlockX.length;
+    }
     function drawPadle() { //zeichnet den Schläger basierend auf der aktuellen Mausposition
         ctx.beginPath();
         ctx.rect(mouseX - 50, 530, 100, 10);
@@ -31,39 +64,69 @@ $(document).ready(function () {
         ctx.closePath();
     }
 
-    function draw() { //cleart das Canvas und zeichnet die elemente an einer neuen Position, einmal pro Frame
+    function Render() { //cleart das Canvas und zeichnet die elemente an einer neuen Position, einmal pro Frame
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         x += dx;
         y += dy;
         drawBall();
+        drawPadle();
+        drawBlocks();
         checkCollisionWalls();
         checkCollisionPadle();
-        drawPadle();
+        checkCollisionBlocks();
+        if (isCalculated == false) {
+            calculateBlocksPosition();
+            isCalculated = true;
+        }
+        setBlocks();
     }
+
 
     function checkCollisionWalls() { //überprüft auf Kollisionen mit Wänden
         var GameFieldHeight = canvas.height;
         var GameFieldWidth = canvas.width;
-        if (x >= GameFieldWidth) {
-            dx = -2;
+        if (x > GameFieldWidth) {
+            dx = -(dx);
         }
-        if (x <= 0) {
-            dx = 2;
+        if (x < 0) {
+            dx = -(dx);
         }
-        if (y <= 0) {
-            dy = 2;
+        if (y < 0) {
+            dy = -(dy);
         }
-        if (y >= GameFieldHeight) {
-            alert("You Lose!");
+        if (y > GameFieldHeight) {
+            x = canvas.width / 2;
+            y = canvas.height - 100;
+            dx = -(dx);
+            dy = -(dy);
         }
     }
     function checkCollisionPadle() { //überprüft auf Schlägerkontakt
-        if (y == 525 || y == 526) {
-            if (x >= mouseX - 50 && x <= mouseX + 50 && dy > 0) {
-                dy = -2;
+        if (y >= 525 && y <= 530) {
+            if (x >= mouseX && x <= mouseX + 50 && dy > 0) {
+                dy = -(dy);
+                dx += 0.05;
+                dy += 0.05;
+
+            }
+            if (x >= mouseX - 50 && x <= mouseX && dy > 0) {
+                dy = -(dy);
+                dx += 0.05;
+                dy += 0.05;
+
             }
         }
     }
+    function checkCollisionBlocks() {
+        for (var c = 0; c < Blocks; c++) {
+            if ((x >= BlockX[c]) && (x <= BlockX[c] + 49) && (y <= BlockY[c] + 10) && (y >= BlockY[c] - 10)) {
+                BlockX.splice(c, 1);
+                BlockY.splice(c, 1);
+                dy = -(dy);
+            }
+        }
 
-    setInterval(draw, 10);
+    }
+
+    setInterval(Render, 10);
 });

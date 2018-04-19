@@ -1,1 +1,30 @@
-canvas { background: #eee; }
+canvas { 
+    background: #eee; 
+}
+#start{
+    width:100%;
+    margin-bottom: 1%;
+    height:10%;
+}
+#leftBar{
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    width:200px;
+    height:700px;
+    margin-left: 50px;
+    background-color:grey;
+    float:left;
+}
+#rightBar{
+    border-radius: 3px;
+    width:200px;
+    height:700px;
+    margin-right: 50px;
+    background-color:grey;
+    float:right;
+}
+.buttonerino{
+    width:100%;
+    margin-bottom: 1%;
+    height:10%;
+}
