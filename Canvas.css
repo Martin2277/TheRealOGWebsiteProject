@@ -29,11 +29,12 @@ canvas {
 }
 #Banner{
     width: 100%;
-    height:200px;
+    height:100px;
     background-color: rgb(192, 192, 192);
     z-index: -10;
 }
 #wrapper{
     position:absolute;
-    left:250px;
+    left:4%;
+
 }

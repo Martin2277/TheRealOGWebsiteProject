@@ -4,8 +4,8 @@ $(document).ready(function () {
     canvas.addEventListener("mousemove", setMousePosition, false);
     var x = canvas.width / 2;
     var y = canvas.height - 100;
-    var dx = 5;
-    var dy = -5;
+    var dx = 0;
+    var dy = 0;
     var mouseX;
     var mouseY;
     var blockWidth = ((canvas.width - 20) / 20)
@@ -18,14 +18,54 @@ $(document).ready(function () {
     var Blocks = 0;
     var rows = 3;
     var cols = 19;
-    var lifes = 3;
+    var lifes = 300;
+    var won = false;
+    //-----------------set Level-----------------//
+    $('#lvl1').click(function () {
+        rows = 5;
+        calculateBlocksPosition();
+    });
+    $('#start').click(function () {
+        dx = 5;
+        dy = -5;
+    });
+    $('#lvl2').click(function () {
+        rows = 10;
+        calculateBlocksPosition();
+    });
+    $('#lvl3').click(function () {
+        rows = 15;
+        calculateBlocksPosition();
+    });
+    //------------------------------------------//
 
-    function setMousePosition(e) { //erhält die aktuelle Mausposition
-        mouseX = e.x - 450;
+    //--------------GetMousePosition------------//
+    function setMousePosition(e) {
+        mouseX = e.x - 260;
         mouseY = e.y;
-        //alert(mouseX);
-        //alert(mouseY);
     }
+    //-----------------------------------------//
+
+    //---befüllt das array basierend auf lvl---//
+    function calculateBlocksPosition() {
+        counter = 0;
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                BlockX[counter] = (j * blockWidth + 35);
+                BlockY[counter] = (i * blockHeight + 35);
+                counter++
+            }
+        }
+    }
+    //-----------------------------------------//
+
+    //-----------Anzahl der Blöcke-------------//
+    function setBlocks() {
+        Blocks = BlockX.length;
+    }
+    //-----------------------------------------//
+
+    //Zeichnung aller Elemente mit neuen Werten//
     function drawBlocks() {
         counter = 0;
         for (var i = 0; i < rows; i++) {
@@ -39,37 +79,26 @@ $(document).ready(function () {
             }
         }
     }
-    function calculateBlocksPosition() {
-        counter = 0;
-        for (var i = 0; i < rows; i++) {
-            for (var j = 0; j < cols; j++) {
-                BlockX[counter] = (j * blockWidth + 35);
-                BlockY[counter] = (i * blockHeight + 35);
-                counter++
-            }
-        }
-    }
-    function setBlocks() {
-        Blocks = BlockX.length;
-    }
-    function drawPadle() { //zeichnet den Schläger basierend auf der aktuellen Mausposition
+    function drawPadle() {
         ctx.beginPath();
         ctx.rect(mouseX - 50, 530, 100, 10);
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
     }
-    function drawBall() { //zeichnet den SpielBall
+    function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI * 2);
         ctx.fillStyle = "#0095DD";
         ctx.fill();
         ctx.closePath();
     }
+    //----------------------------------------//
 
-    function Render() { //cleart das Canvas und zeichnet die elemente an einer neuen Position, einmal pro Frame
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        x += dx;
+    //--------wird alle 10ms augerufen--------//
+    function Render() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); //löscht den canvasinhalt
+        x += dx; //ändert die Position des Balles
         y += dy;
         drawBall();
         drawPadle();
@@ -77,16 +106,16 @@ $(document).ready(function () {
         checkCollisionWalls();
         checkCollisionPadle();
         checkCollisionBlocks();
-        if (isCalculated == false) {
+        if (isCalculated == false) { //ruft nur einmal die calculation der Blöcke auf
             calculateBlocksPosition();
             isCalculated = true;
         }
         setBlocks();
-        checkWin();
+        checkWin(); //überprüft den aktuellen Spielstand
     }
 
-
-    function checkCollisionWalls() { //überprüft auf Kollisionen mit Wänden
+    //--------überprüft auf Collision--------//
+    function checkCollisionWalls() {
         var GameFieldHeight = canvas.height;
         var GameFieldWidth = canvas.width;
         if (x > GameFieldWidth) {
@@ -112,7 +141,7 @@ $(document).ready(function () {
             }
         }
     }
-    function checkCollisionPadle() { //überprüft auf Schlägerkontakt
+    function checkCollisionPadle() {
         if (y >= 525 && y <= 530) {
             if (x >= mouseX && x <= mouseX + 50 && dy > 0) {
                 dy = -(dy);
@@ -140,12 +169,22 @@ $(document).ready(function () {
         }
 
     }
+    //-------------------------------------//
+
+    //-------Überprüft ob gewonnen---------//
     function checkWin() {
-        if (Blocks <= 0) {
+        if (Blocks <= 0 && won == false) {
             alert("YOU WIN!")
-            calculateBlocksPosition();
+            won = true;
+            dx = 0;
+            dy = 0;
+            x = canvas.width / 2;
+            y = canvas.height - 100;
         }
     }
+    //-------------------------------------//
 
+    //-----ruft "Render" alle 10ms auf-----//
     setInterval(Render, 10);
+    //-------------------------------------//
 });
