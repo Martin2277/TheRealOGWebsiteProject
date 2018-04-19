@@ -58,7 +58,7 @@ $(document).ready(function () {
         }
     }
     function checkCollisionPadle() { //überprüft auf Schlägerkontakt
-        if (y >= 525) {
+        if (y == 525 || y == 526) {
             if (x >= mouseX - 50 && x <= mouseX + 50 && dy > 0) {
                 dy = -2;
             }
