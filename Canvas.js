@@ -16,17 +16,20 @@ $(document).ready(function () {
     var counter = 0;
     var isCalculated = false;
     var Blocks = 0;
+    var rows = 3;
+    var cols = 19;
+    var lifes = 3;
 
     function setMousePosition(e) { //erhält die aktuelle Mausposition
-        mouseX = e.x - 250;
+        mouseX = e.x - 450;
         mouseY = e.y;
         //alert(mouseX);
         //alert(mouseY);
     }
     function drawBlocks() {
         counter = 0;
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 29; j++) {
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
                 ctx.beginPath();
                 ctx.rect(BlockX[counter], BlockY[counter], blockWidth - 1, blockHeight - 1);
                 ctx.fillStyle = "#0095DD";
@@ -38,8 +41,8 @@ $(document).ready(function () {
     }
     function calculateBlocksPosition() {
         counter = 0;
-        for (var i = 0; i < 15; i++) {
-            for (var j = 0; j < 19; j++) {
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
                 BlockX[counter] = (j * blockWidth + 35);
                 BlockY[counter] = (i * blockHeight + 35);
                 counter++
@@ -79,6 +82,7 @@ $(document).ready(function () {
             isCalculated = true;
         }
         setBlocks();
+        checkWin();
     }
 
 
@@ -99,6 +103,13 @@ $(document).ready(function () {
             y = canvas.height - 100;
             dx = -(dx);
             dy = -(dy);
+            if (lifes <= 1) {
+                alert("YOU LOSE!")
+                calculateBlocksPosition();
+                lifes = 3;
+            } else {
+                lifes--;
+            }
         }
     }
     function checkCollisionPadle() { //überprüft auf Schlägerkontakt
@@ -107,12 +118,14 @@ $(document).ready(function () {
                 dy = -(dy);
                 dx += 0.05;
                 dy += 0.05;
+                console.log(dx)
+                console.log(dy);
 
             }
             if (x >= mouseX - 50 && x <= mouseX && dy > 0) {
                 dy = -(dy);
-                dx += 0.05;
-                dy += 0.05;
+                dx *= 1.01;
+                dy *= 1.01;
 
             }
         }
@@ -126,6 +139,12 @@ $(document).ready(function () {
             }
         }
 
+    }
+    function checkWin() {
+        if (Blocks <= 0) {
+            alert("YOU WIN!")
+            calculateBlocksPosition();
+        }
     }
 
     setInterval(Render, 10);
