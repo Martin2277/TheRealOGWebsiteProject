@@ -16,24 +16,30 @@ $(document).ready(function () {
     var counter = 0;
     var isCalculated = false;
     var Blocks = 0;
-    var rows = 3;
+    var rows = 5;
     var cols = 19;
-    var lifes = 300;
+    var lifes = 3;
     var won = false;
     //-----------------set Level-----------------//
-    $('#lvl1').click(function () {
-        rows = 5;
-        calculateBlocksPosition();
-    });
     $('#start').click(function () {
+        BlockX = [];
+        calculateBlocksPosition();
+        lifes = 3;
         dx = 5;
         dy = -5;
     });
+    $('#lvl1').click(function () {
+        rows = 5;
+        BlockX = [];
+        calculateBlocksPosition();
+    });
     $('#lvl2').click(function () {
+        BlockX = [];
         rows = 10;
         calculateBlocksPosition();
     });
     $('#lvl3').click(function () {
+        BlockX = [];
         rows = 15;
         calculateBlocksPosition();
     });
@@ -72,7 +78,7 @@ $(document).ready(function () {
             for (var j = 0; j < cols; j++) {
                 ctx.beginPath();
                 ctx.rect(BlockX[counter], BlockY[counter], blockWidth - 1, blockHeight - 1);
-                ctx.fillStyle = "#0095DD";
+                ctx.fillStyle = "#ff0000";
                 ctx.fill();
                 ctx.closePath();
                 counter++;
@@ -100,6 +106,7 @@ $(document).ready(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height); //löscht den canvasinhalt
         x += dx; //ändert die Position des Balles
         y += dy;
+        $('#rightBar').html("Leben: " + lifes);
         drawBall();
         drawPadle();
         drawBlocks();
@@ -133,9 +140,11 @@ $(document).ready(function () {
             dx = -(dx);
             dy = -(dy);
             if (lifes <= 1) {
+                lifes--;
+                $('#rightBar').html("Leben: " + lifes);
                 alert("YOU LOSE!")
-                calculateBlocksPosition();
-                lifes = 3;
+                dx = 0;
+                dy = 0;
             } else {
                 lifes--;
             }
@@ -145,16 +154,14 @@ $(document).ready(function () {
         if (y >= 525 && y <= 530) {
             if (x >= mouseX && x <= mouseX + 50 && dy > 0) {
                 dy = -(dy);
-                dx += 0.05;
-                dy += 0.05;
-                console.log(dx)
-                console.log(dy);
+                dx += 1;
+                dx = -(dx);
 
             }
             if (x >= mouseX - 50 && x <= mouseX && dy > 0) {
                 dy = -(dy);
-                dx *= 1.01;
-                dy *= 1.01;
+                dx -= 1;
+                dx = -(dx);
 
             }
         }

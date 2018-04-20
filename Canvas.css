@@ -34,6 +34,7 @@ canvas {
     z-index: -10;
 }
 #wrapper{
+    margin:auto;
     position:absolute;
     left:4%;
 
