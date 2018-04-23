@@ -2,14 +2,14 @@ $(document).ready(function () {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     canvas.addEventListener("mousemove", setMousePosition, false);
-    var x = canvas.width / 2;
+    var x = Math.random() * canvas.width + 1;
     var y = canvas.height - 100;
     var dx = 0;
     var dy = 0;
     var mouseX;
     var mouseY;
     var blockWidth = ((canvas.width - 20) / 20)
-    var blockHeight = 10;
+    var blockHeight = (canvas.height / 100) * 2;
     var blocksThere = false;
     var BlockX = [];
     var BlockY = [];
@@ -22,18 +22,19 @@ $(document).ready(function () {
     var won = false;
     var hpId;
     var removeHP;
+    var color = "#6f1048";
     //-----------------set Level-----------------//
     $('#start').click(function () {
         $(this).prop("disabled", true);
         for (var hp = 0; hp < 3; hp++) {
             hpId = "hp" + hp;
-            $('#rightBar').append('<img id=' + hpId + ' src="HP.png"></img>');
+            $('#rightBar').append('<img id=' + hpId + ' class="hp" src="HP.png"></img>');
         }
         BlockX = [];
         calculateBlocksPosition();
         lifes = 3;
-        dx = 1.5;
-        dy = -1.5;
+        dx = 2.5;
+        dy = -2.5;
     });
     $('#lvl1').click(function () {
         rows = 5;
@@ -64,6 +65,7 @@ $(document).ready(function () {
         counter = 0;
         for (var i = 0; i < rows; i++) {
             for (var j = 0; j < cols; j++) {
+
                 BlockX[counter] = (j * blockWidth + 35);
                 BlockY[counter] = (i * blockHeight + 35);
                 counter++
@@ -85,7 +87,7 @@ $(document).ready(function () {
             for (var j = 0; j < cols; j++) {
                 ctx.beginPath();
                 ctx.rect(BlockX[counter], BlockY[counter], blockWidth - 1, blockHeight - 1);
-                ctx.fillStyle = "#ff0000";
+                ctx.fillStyle = color;
                 ctx.fill();
                 ctx.closePath();
                 counter++;
@@ -95,14 +97,14 @@ $(document).ready(function () {
     function drawPadle() {
         ctx.beginPath();
         ctx.rect(mouseX - 50, 530, 100, 10);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = color;
         ctx.fill();
         ctx.closePath();
     }
     function drawBall() {
         ctx.beginPath();
         ctx.arc(x, y, 10, 0, Math.PI * 2);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = color;
         ctx.fill();
         ctx.closePath();
     }
@@ -162,17 +164,12 @@ $(document).ready(function () {
     }
     function checkCollisionPadle() {
         if (y >= 525 && y <= 530) {
+            console.log(dy);
             if (x >= mouseX && x <= mouseX + 50 && dy > 0) {
-                dy = -(dy);
-                dx += 1;
-                dx = -(dx);
-
+                dy = -(dy) * 1.002;
             }
             if (x >= mouseX - 50 && x <= mouseX && dy > 0) {
-                dy = -(dy);
-                dx -= 1;
-                dx = -(dx);
-
+                dy = -(dy) * 1.002;
             }
         }
     }
