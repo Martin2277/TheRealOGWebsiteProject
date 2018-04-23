@@ -1,6 +1,9 @@
 canvas { 
     background: #eee; 
     float:left;
+    cursor:none;
+    border-radius: 10px;
+    background: #ffffff;
 }
 #start{
     width:100%;
@@ -10,15 +13,15 @@ canvas {
 #leftBar{
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
-    width:200px;
-    height:600px;
+    width:14.3%;
+    height:800px;
     background-color:grey;
     float:left;
 }
 #rightBar{
     border-radius: 3px;
-    width:200px;
-    height:600px;
+    width:14.3%;
+    height:800px;
     background-color:grey;
     float:left;
 }
@@ -29,13 +32,21 @@ canvas {
 }
 #Banner{
     width: 100%;
-    height:100px;
+    height:200px;
     background-color: rgb(192, 192, 192);
     z-index: -10;
 }
 #wrapper{
+    width:100%;
+    float:left;
+    position:relative;
     margin:auto;
-    position:absolute;
-    left:4%;
-
+}
+img{
+    float:left;
+    width:66px;
+    height:66px;
+}
+body{
+    background-color: rgb(128, 128, 128);
 }

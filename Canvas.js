@@ -20,13 +20,20 @@ $(document).ready(function () {
     var cols = 19;
     var lifes = 3;
     var won = false;
+    var hpId;
+    var removeHP;
     //-----------------set Level-----------------//
     $('#start').click(function () {
+        $(this).prop("disabled", true);
+        for (var hp = 0; hp < 3; hp++) {
+            hpId = "hp" + hp;
+            $('#rightBar').append('<img id=' + hpId + ' src="HP.png"></img>');
+        }
         BlockX = [];
         calculateBlocksPosition();
         lifes = 3;
-        dx = 5;
-        dy = -5;
+        dx = 1.5;
+        dy = -1.5;
     });
     $('#lvl1').click(function () {
         rows = 5;
@@ -47,7 +54,7 @@ $(document).ready(function () {
 
     //--------------GetMousePosition------------//
     function setMousePosition(e) {
-        mouseX = e.x - 260;
+        mouseX = e.x - 565;
         mouseY = e.y;
     }
     //-----------------------------------------//
@@ -106,7 +113,6 @@ $(document).ready(function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height); //löscht den canvasinhalt
         x += dx; //ändert die Position des Balles
         y += dy;
-        $('#rightBar').html("Leben: " + lifes);
         drawBall();
         drawPadle();
         drawBlocks();
@@ -141,12 +147,16 @@ $(document).ready(function () {
             dy = -(dy);
             if (lifes <= 1) {
                 lifes--;
-                $('#rightBar').html("Leben: " + lifes);
+                removeHP = "#hp" + lifes;
+                $(removeHP).remove();
+                $('#start').prop("disabled", false);
                 alert("YOU LOSE!")
                 dx = 0;
                 dy = 0;
             } else {
                 lifes--;
+                removeHP = "#hp" + lifes;
+                $(removeHP).remove();
             }
         }
     }
@@ -182,6 +192,7 @@ $(document).ready(function () {
     function checkWin() {
         if (Blocks <= 0 && won == false) {
             alert("YOU WIN!")
+            $('#start').prop("disabled", false);
             won = true;
             dx = 0;
             dy = 0;
@@ -192,6 +203,6 @@ $(document).ready(function () {
     //-------------------------------------//
 
     //-----ruft "Render" alle 10ms auf-----//
-    setInterval(Render, 10);
+    setInterval(Render, 5);
     //-------------------------------------//
 });
