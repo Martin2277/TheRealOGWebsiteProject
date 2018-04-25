@@ -2,8 +2,10 @@ $(document).ready(function () {
     //---------------Variablen---------------------//
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
-    var img = new Image();
-    img.src = 'SpaceInvader.png';
+    var invader = new Image();
+    var shooter = new Image();
+    invader.src = 'SpaceInvader.png';
+    shooter.src = 'shooter.png';
     var InvaderWidth = (canvas.width - 20) / 20;
     var InvaderHeight = 50;
     var InvadersX = [];
@@ -20,14 +22,24 @@ $(document).ready(function () {
     var del1;
     var del2;
     var change = 0;
+    var fireDy = canvas.height - 60;
+    var shotsX = [];
+    var shotsY = [];
+    var shotsCounter = 0;
+    var fireCounter = 0;
 
     //------------PlayerInputs--------------------//
     document.addEventListener('keydown', (event) => {
         if (event.key == "ArrowLeft") {
-            dx += -5;
+            dx += -10;
         }
         if (event.key == "ArrowRight") {
-            dx += 5;
+            dx += 10;
+        }
+        if (event.key == "z") {
+            shotsX[shotsCounter] = dx + 50;
+            shotsY[shotsCounter] = fireDy;
+            shotsCounter++;
         }
     }
     )
@@ -40,12 +52,13 @@ $(document).ready(function () {
         calculateInvadersPosition();
         drawInvaders();
         drawPlayer();
+        fire();
     }
 
     //-----------------------------------------//
 
     function calculateInvadersPosition() {
-        if (delayCounter % 500 == 0) {
+        if (delayCounter % 250 == 0) {
             if (change % 2 == 0) {
                 del1 = 10;
                 del2 = -10;
@@ -75,24 +88,32 @@ $(document).ready(function () {
             }
         }
     }
+    function fire() {
+        var move = -0.5;
+        fireCounter = 0;
+        shotsX.forEach(element => {
+            ctx.beginPath();
+            ctx.moveTo(shotsX[fireCounter], shotsY[fireCounter]);
+            ctx.lineTo(shotsX[fireCounter], shotsY[fireCounter] - 5);
+            ctx.stroke();
+            shotsY[fireCounter] += move;
+            fireCounter++;
+        });
+    }
 
     function drawInvaders() {
         counter = 0;
         for (var i = 0; i < rows; i++) {
             for (var j = 0; j < cols; j++) {
-                ctx.drawImage(img, InvadersX[counter], InvadersY[counter], InvaderWidth, InvaderHeight);
+                ctx.drawImage(invader, InvadersX[counter], InvadersY[counter], InvaderWidth, InvaderHeight);
                 counter++;
             }
         }
     }
     function drawPlayer() {
-        ctx.beginPath();
-        ctx.rect(dx, canvas.height - 30, 100, 10);
-        ctx.fillStyle = "blue";
-        ctx.fill();
-        ctx.closePath();
+        ctx.drawImage(shooter, dx, canvas.height - 30, 100, 50);
     }
     //-----ruft "Render" alle 10ms auf-----//
-    setInterval(Render, 2);
+    setInterval(Render, 5);
     //-------------------------------------// 
 });
