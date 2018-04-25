@@ -43,12 +43,7 @@ border-radius:10px;
     float:left;
     position:relative;
     margin:auto;
-    bottom:25px;
-}
-.hp{
-    float:left;
-    width:33%;
-    height:66px;
+    bottom: 25px;
 }
 body{
     background: "banner.jpg";
