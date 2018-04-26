@@ -6,8 +6,7 @@ $(document).ready(function () {
     var y = canvas.height - 100;
     var dx = 0;
     var dy = 0;
-    var mouseX;
-    var mouseY;
+    var mouseX = canvas.width / 2;
     var blockWidth = ((canvas.width - 20) / 20)
     var blockHeight = (canvas.height / 100) * 2;
     var blocksThere = false;
@@ -56,7 +55,6 @@ $(document).ready(function () {
     //--------------GetMousePosition------------//
     function setMousePosition(e) {
         mouseX = e.x - 565;
-        mouseY = e.y;
     }
     //-----------------------------------------//
 

@@ -14,20 +14,20 @@ $(document).ready(function () {
     var rows = 3;
     var cols = 18;
     var dx = canvas.width / 2;
-    var delay = 0;
     var test = 3;
-    var delay1 = 0.01;
-    var delay2 = -0.01;
     var delayCounter = 0;
     var del1;
     var del2;
     var change = 0;
     var fireDy = canvas.height - 60;
-    var shotsX = [];
-    var shotsY = [];
-    var shotsCounter = 0;
+    var shotX;
+    var shotY;
     var fireCounter = 0;
-
+    var hit = false;
+    var isShot = false;
+    var random;
+    var bombX = 0;
+    var bombY = 0;
     //------------PlayerInputs--------------------//
     document.addEventListener('keydown', (event) => {
         if (event.key == "ArrowLeft") {
@@ -36,78 +36,90 @@ $(document).ready(function () {
         if (event.key == "ArrowRight") {
             dx += 10;
         }
-        if (event.key == "z") {
-            shotsX[shotsCounter] = dx + 50;
-            shotsY[shotsCounter] = fireDy;
-            shotsCounter++;
+        if (event.key == "z" && isShot == false) {
+            shotX = dx + 50;
+            shotY = fireDy;
+            isShot = true;
         }
     }
     )
     //-------------------------------------------//
+    //--------------Setup-----------------------//
+    counter = 0;
+    for (var i = 0; i < rows; i++) {
+        for (var j = 0; j < cols; j++) {
+
+            InvadersX[counter] = (j * InvaderWidth + 60);
+            InvadersY[counter] = (i * InvaderHeight);
+            counter++
+        }
+    }
+
+    //-----------------------------------------//
+
 
 
     //----------------OnRender------------------//
     function Render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        calculateInvadersPosition();
+        InvadersDance();
         drawInvaders();
         drawPlayer();
-        fire();
+        DropBomb();
+        if (isShot == true) fire();
+        if (isShot == true) checkHit();
+        delayCounter++;
     }
 
     //-----------------------------------------//
 
-    function calculateInvadersPosition() {
-        if (delayCounter % 250 == 0) {
-            if (change % 2 == 0) {
-                del1 = 10;
-                del2 = -10;
-            } else {
-                del1 = -10;
-                del2 = 10;
-            }
-            change++;
-        } else {
-            del2 = 0;
-            del1 = 0;
-        }
-        delay2 += del1;
-        delay1 += del2;
-
-        delayCounter++;
-
-        counter = 0;
-        for (var i = 0; i < rows; i++) {
-            for (var j = 0; j < cols; j++) {
-
-                if (i == 0 || i == 2) delay = delay2;
-                if (i == 1) delay = delay1;
-                InvadersX[counter] = (j * InvaderWidth + 60 + delay);
-                InvadersY[counter] = (i * InvaderHeight);
-                counter++
+    function InvadersDance() {
+        if (delayCounter % 200 == 0) {
+            for (var x = 0; x < InvadersX.length; x++) {
+                random = Math.floor(Math.random() * 20) - 10;
+                InvadersY[x] += 5;
+                InvadersX[x] += random;
             }
         }
     }
+    function DropBomb() {
+        random = Math.floor(Math.random() * InvadersX.length);
+        var move = +0.5;
+
+        ctx.beginPath();
+        ctx.moveTo(300, bombY);
+        ctx.lineTo(300, bombY + 5);
+        ctx.stroke();
+        bombY += move;
+    }
     function fire() {
-        var move = -0.5;
-        fireCounter = 0;
-        shotsX.forEach(element => {
-            ctx.beginPath();
-            ctx.moveTo(shotsX[fireCounter], shotsY[fireCounter]);
-            ctx.lineTo(shotsX[fireCounter], shotsY[fireCounter] - 5);
-            ctx.stroke();
-            shotsY[fireCounter] += move;
-            fireCounter++;
-        });
+        var move = -5;
+        ctx.beginPath();
+        ctx.moveTo(shotX, shotY);
+        ctx.lineTo(shotX, shotY - 5);
+        ctx.stroke();
+        shotY += move;
+    }
+    function checkHit() {
+        if (shotY <= canvas.height && shotY >= 0 && shotY % 5 == 0) {
+            for (var b = 0; b < InvadersX.length; b++) {
+                if (shotX < InvadersX[b] + 35 && shotX > InvadersX[b] + 5 && shotY == InvadersY[b]) {
+                    InvadersX.splice(b, 1);
+                    InvadersY.splice(b, 1);
+                    isShot = false;
+                }
+                if (shotY <= 0) {
+                    isShot = false;
+                }
+            }
+        }
     }
 
     function drawInvaders() {
         counter = 0;
-        for (var i = 0; i < rows; i++) {
-            for (var j = 0; j < cols; j++) {
-                ctx.drawImage(invader, InvadersX[counter], InvadersY[counter], InvaderWidth, InvaderHeight);
-                counter++;
-            }
+        for (var i = 0; i < InvadersX.length; i++) {
+            ctx.drawImage(invader, InvadersX[counter], InvadersY[counter], InvaderWidth, InvaderHeight);
+            counter++;
         }
     }
     function drawPlayer() {
