@@ -28,6 +28,7 @@ $(document).ready(function () {
     var random;
     var bombX = 0;
     var bombY = 0;
+    var score = 0;
     //------------PlayerInputs--------------------//
     document.addEventListener('keydown', (event) => {
         if (event.key == "ArrowLeft") {
@@ -76,9 +77,11 @@ $(document).ready(function () {
     function InvadersDance() {
         if (delayCounter % 200 == 0) {
             for (var x = 0; x < InvadersX.length; x++) {
+                InvadersY[x] += 10;
                 random = Math.floor(Math.random() * 20) - 10;
-                InvadersY[x] += 5;
-                InvadersX[x] += random;
+                if (InvadersX[x] + random > 10 && InvadersX[x] + random < canvas.width - 10) {
+                    InvadersX[x] += random;
+                }
             }
         }
     }
@@ -106,6 +109,8 @@ $(document).ready(function () {
                 if (shotX < InvadersX[b] + 35 && shotX > InvadersX[b] + 5 && shotY == InvadersY[b]) {
                     InvadersX.splice(b, 1);
                     InvadersY.splice(b, 1);
+                    score += 10;
+                    $('#rightBar').html('<div> score: ' + score + '</div>');
                     isShot = false;
                 }
                 if (shotY <= 0) {
