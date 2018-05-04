@@ -46,7 +46,8 @@ $(document).ready(function () {
         botY2 = tempY;
     }
     function botMove() {
-        if (botY != botY2 && ballY >= 200) {
+        if (botY != botY2 && ballX >= 500) {
+            console.log(ballY);
             if (botY < botY2) {
                 botY += 5;
             }
@@ -81,5 +82,5 @@ $(document).ready(function () {
         if (ballX >= canvas.width - 40 && ballX <= canvas.width - 20 && ballY <= botY + 50 && ballY >= botY - 50) (speedX = -speedX)
     }
     //-----ruft "Render" alle 10ms auf-----//
-    setInterval(Render, 50);
+    setInterval(Render, 0);
 });
