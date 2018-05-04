@@ -2,12 +2,11 @@ $(document).ready(function () {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var dy = canvas.height / 2;
-    var cy = canvas.height / 2;
     var ballX = canvas.width / 2;
     var ballY = canvas.height / 2;
-    var speedY = 2;
-    var speedX = -2;
-    var botY = ballY;
+    var speedY = 1;
+    var speedX = -1;
+    var botY = (canvas.height / 2);
     var botY2;
     var Ball = new Image();
     Ball.src = 'Doge.png'
@@ -37,9 +36,12 @@ $(document).ready(function () {
     }
 
     function botBrain() {
+        // var dist = ((ballY + 960 * speedY) % canvas.height) + 20;
+        // console.log(Math.abs(dist));
+        // console.log("vllt " + (600 + dist));
         var tempY = ballY;
         var tempSpeedY = speedY;
-        for (var x = ballX; x < (canvas.width - 30) / Math.abs(speedY); x++) {
+        for (var x = ballX; x < canvas.width; x++) {
             tempY += tempSpeedY;
             if (tempY <= 0 || tempY >= canvas.height) tempSpeedY = -tempSpeedY;
         }
@@ -47,7 +49,6 @@ $(document).ready(function () {
     }
     function botMove() {
         if (botY != botY2 && ballX >= 500) {
-            console.log(ballY);
             if (botY < botY2) {
                 botY += 5;
             }
@@ -69,18 +70,22 @@ $(document).ready(function () {
         ctx.closePath();
     }
     function drawBall() {
-        ctx.drawImage(Ball, ballX, ballY, 20, 20);
+        ctx.drawImage(Ball, ballX, ballY, 40, 40);
     }
     function Ballmove() {
         ballX += speedX;
         ballY += speedY;
         if (ballY >= canvas.height - 20 || ballY <= 0) speedY = - speedY;
-        if (ballX <= 20 && ballX >= 10 && ballY <= dy + 100 && ballY >= dy) {
+        if (ballX <= 20 && ballX >= 10) {
             speedX = -speedX;
             botBrain();
         }
-        if (ballX >= canvas.width - 40 && ballX <= canvas.width - 20 && ballY <= botY + 50 && ballY >= botY - 50) (speedX = -speedX)
+        if (ballX == canvas.width - 40) {
+            console.log("bot" + botY);
+            console.log("ball " + ballY);
+        }
+        if (ballX <= canvas.width - 30 && ballX >= canvas.width - 40 && ballY <= botY + 50 && ballY >= botY - 50) (speedX = -speedX)
     }
     //-----ruft "Render" alle 10ms auf-----//
-    setInterval(Render, 0);
+    setInterval(Render, 1);
 });
