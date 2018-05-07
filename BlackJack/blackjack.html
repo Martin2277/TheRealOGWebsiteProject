@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script language="javascript" type="text/javascript" src="blackjackscript.js"></script>
+        <link href="blackjackstyle.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    </head>
+    <body>
+        <body background="https://media.istockphoto.com/photos/green-poker-table-felt-background-picture-id467583755?k=6&m=467583755&s=612x612&w=0&h=yYdwoNN2UZkMCxAAEf5PyltMphePlfEAzw6oEeYMpEU=">
+            <div align="center">
+              <div id="geld" class="border navbar fixed-top">
+                <span id="Guthaben" onClick="addMoney()">
+            Guthaben: 
+            <div id="Money">GELD</div>
+                </span>
+                <span id="Einsatzfield">
+            Einsatz: 
+            <input type="text" value="10" id="Einsatz"></input>
+                </span>
+            </div>
+              <div id="Status"></div>
+              <div id="gamefield">
+            
+            <div id="SpielerFeld" class="gamefielditems">
+            <h3 class="abstand">Spieler</h3>
+            <div id="Player" class="hidden">PlayerDeck</div>
+            
+            <div id="KartenbildPlayer" style="height: 160px; width: 300px;"></div>
+              <span id="PlayerPoints" class="form-control Pointfield">PlayerPunkte</span><br />
+            
+                </div>
+                <div id="BankFeld" class="gamefielditems2">
+            <h3 class="abstand">Bank</h3>
+            <div id="Bank" class="hidden">BankDeck</div>
+            
+            <div id="KartenbildBank" style="height: 160px; width: 300px;"></div>
+                  <div id="BankPoints" class="form-control Pointfield">BankPunkte</div>
+            
+              </div>
+                <button class="btn btn-primary" id="restart" onClick="setup()">Restart</button><br /><br />
+                <button class="btn btn-success" id="draw" onClick="draw('Player')">Draw</button>
+                <button class="btn btn-danger" id="stop" onClick="stop()">Stop</button>
+              </div>
+              </div>
+            </body>
+    </body>
+</html>

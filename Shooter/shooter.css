@@ -1,0 +1,54 @@
+#tail {
+    position: absolute;
+    float: left;
+}
+
+#Gamewindow{
+  height: 800px;
+  width: 600px;
+  background-color: lightblue;
+}
+
+#Gameinfo{
+  position: absolute;
+  top: 50px;
+  left: 620px;
+  
+}
+
+#ship{
+  height: 64px;
+  width: 64px;
+  position: absolute;
+  z-index: 5;
+}
+
+#Life{
+  margin-left: 68px;
+}
+
+#Firerate{
+  margin-left: 40px;
+}
+
+#Bullet-speed{
+  margin-left: 5px;
+}
+
+#UpgradeLv{
+  margin-left: 13px;
+}
+
+#Points{
+  margin-left: 49px;
+}
+
+.enemy{
+  height: 44px;
+  width: 44px;
+}
+
+.bullet{
+  height: 10px;
+  width:  6px;
+}

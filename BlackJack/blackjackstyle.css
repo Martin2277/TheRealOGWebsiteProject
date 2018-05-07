@@ -1,0 +1,41 @@
+#geld{
+    position: relative;
+    background-color: #ff9900;
+    top: 0px;
+  }
+  
+  #gamefield{
+    position: relative;
+    top: 200px;
+  }
+  
+  .Pointfield{
+    background-color: #ffff99;
+    width: 200px;
+  }
+  
+  .hidden{
+    display: none;
+  }
+  
+  .gamefielditems{
+  float: left;
+  }
+  
+  .gamefielditems2{
+  float: right;
+  }
+  
+  #gamefield{
+    width: 800px;
+  }
+  
+  .abstand{
+    margin-bottom: 20px;
+  }
+  
+  #Status{
+    position: absolute;
+    left: 44%;
+    font-size: 60px;
+  }
