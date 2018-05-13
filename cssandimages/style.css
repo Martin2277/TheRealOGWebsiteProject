@@ -48,7 +48,7 @@ header::before{
     min-height: 100vh;
 }
 
-header * {
+nav header * {
     font-weight:  normal;
     letter-spacing: 0.2em;
     text-align: center;
@@ -170,5 +170,6 @@ nav ul li a {
     .menu-icon {
           display: block;
     }
+    
 
 }
