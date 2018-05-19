@@ -2,7 +2,7 @@ html {
     height: 100%;
     overflow: hidden;
 }
-#startpageheaderbody{
+#startpagebody{
     color: #fff;
     margin: 0;
     padding: 0;
@@ -15,7 +15,7 @@ html {
 }
 
 
-#startpageheader{
+#startpagebody .spheader{
     box-sizing: border-box;
     min-height:  100vh;
     padding: 30vw 0 5vw;
@@ -23,16 +23,16 @@ html {
     transform-style: inherit;
     width: 100vw;
 }
-#startpageheaderh1{
+#startpagebody .spheader .sph1{
 
     margin-top: -100px;
 }
 
-#startpageheader, header:before{
+#startpagebody .spheader .sph1, header:before{
     background: 50% 50% /cover
 }
 
-#startpageheader::before{
+#startpagebody .spheader::before{
     bottom:0 ;
     content: "";
     left: 0;
@@ -48,7 +48,7 @@ html {
     min-height: 100vh;
 }
 
-nav #startpageheaderh1 * {
+#startpagebody .spheader * {
     font-weight:  normal;
     letter-spacing: 0.2em;
     text-align: center;
@@ -61,7 +61,7 @@ nav #startpageheaderh1 * {
 
 
 
-/*
+
 
 html, #headerbody {
     margin: 0;
@@ -180,4 +180,4 @@ nav ul li a {
     
 
 }
-*/
+
