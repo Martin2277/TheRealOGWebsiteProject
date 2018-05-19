@@ -48,7 +48,7 @@ html {
     min-height: 100vh;
 }
 
-nav #startpageheader * {
+nav #startpageheaderh1 * {
     font-weight:  normal;
     letter-spacing: 0.2em;
     text-align: center;
