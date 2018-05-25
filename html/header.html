@@ -7,62 +7,40 @@
       <title>NavBar</title>
       <link rel="stylesheet" href="../cssandimages/style.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+      <link href="navbar-fixed-top.css" rel="stylesheet" >
       <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+      
+      
 </head>
 <body id="headerbody">
-      <div class="wrapper">
-            <header class= "headerheader">
-                  <nav>
-                        <div class="menu-icon">
-                              <i class="fa fa-bars fa-2x"></i>
-                        </div>
+            <nav class="navbar navbar-default navbar-fixed-top">
+              <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="startpagehtml.html">RealOGWebsiteProject</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                  <ul class="nav navbar-nav">
+                  <li></li>
+                    <li class="Pong"><a href="#">Pong</a></li>
+                    <li><a href="#TowerDefence">Tower Defence</a></li>
+                    <li><a href="#SpaceInvaders">Space Invaders</a></li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="">About us</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
 
-                        <div class="logo">
-                              OG Arcade Gaming
-                        </div>
-
-                        <div class="menu">
-                              <ul>
-                                    <li><a href="#">Pong</a></li>
-                                    <li><a href="#">Space Invaders</a></li>
-                                    <li><a href="#">Blocks</a></li>
-                                    <li><a href="#">TODO</a></li>
-                              </ul>
-                        </div>
-                  </nav>
-
-            </header>
-
-            <div class="content">
-
-            </div>
-      </div>
-
-      <script type="text/javascript">
-
-      // Menu-toggle button
-
-      $(document).ready(function() {
-            $(".menu-icon").on("click", function() {
-                  $("nav ul").toggleClass("showing");
-            });
-      });
-
-      // Scrolling Effect
-
-      $(window).on("scroll", function() {
-            if($(window).scrollTop()) {
-                  $('nav').addClass('black');
-            }
-
-            else {
-                  $('nav').removeClass('black');
-            }
-      })
-
-
-      </script>
-
-</body>
+          </body>
 </html>
 
